@@ -1,0 +1,72 @@
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+import { useState } from 'react';
+import { Menu, X } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
+
+// Layout Components
+import Sidebar from './components/layout/Sidebar';
+
+// Pages
+import Overview from './pages/Overview';
+import Skills from './pages/Skills';
+import Tools from './pages/Tools';
+import Playbook from './pages/Playbook';
+import Maintenance from './pages/Maintenance';
+
+type Section = 'overview' | 'skills' | 'tools' | 'playbook' | 'maintenance';
+
+export default function App() {
+  const [activeSection, setActiveSection] = useState<Section>('overview');
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+
+  const renderContent = () => {
+    switch (activeSection) {
+      case 'overview': return <Overview />;
+      case 'skills': return <Skills />;
+      case 'tools': return <Tools />;
+      case 'playbook': return <Playbook />;
+      case 'maintenance': return <Maintenance />;
+      default: return <Overview />;
+    }
+  };
+
+  return (
+    <div className="flex h-screen bg-[#0a0a0a] text-gray-200 font-sans selection:bg-orange-500 selection:text-white">
+      {/* Mobile Menu Toggle */}
+      <button
+        onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+        className="fixed top-4 left-4 z-50 p-2 bg-[#1a1a1a] border border-gray-800 rounded-lg md:hidden"
+      >
+        {isSidebarOpen ? <X size={20} /> : <Menu size={20} />}
+      </button>
+
+      {/* Sidebar */}
+      <Sidebar
+        isOpen={isSidebarOpen}
+        activeSection={activeSection}
+        onSectionChange={setActiveSection}
+      />
+
+      {/* Main Content */}
+      <main className="flex-1 overflow-y-auto relative scroll-smooth bg-[radial-gradient(circle_at_50%_0%,_rgba(255,100,20,0.05)_0%,_transparent_50%)]">
+        <div className="max-w-5xl mx-auto p-8 pt-16 md:pt-8 min-h-full">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeSection}
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -20, opacity: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              {renderContent()}
+            </motion.div>
+          </AnimatePresence>
+        </div>
+      </main>
+    </div>
+  );
+}
