@@ -36,13 +36,19 @@ export default function App() {
 
   return (
     <div className="flex h-screen bg-[#0a0a0a] text-gray-200 font-sans selection:bg-orange-500 selection:text-white">
-      {/* Mobile Menu Toggle */}
-      <button
-        onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-        className="fixed top-4 left-4 z-50 p-2 bg-[#1a1a1a] border border-gray-800 rounded-lg md:hidden"
-      >
-        {isSidebarOpen ? <X size={20} /> : <Menu size={20} />}
-      </button>
+      {/* Mobile Top Bar */}
+      <div className="fixed top-0 left-0 right-0 h-16 bg-[#0a0a0a]/80 backdrop-blur-md border-b border-gray-800 z-40 flex items-center px-4 md:hidden">
+        <button
+          onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+          className="p-2 bg-[#1a1a1a] border border-gray-800 rounded-lg mr-4"
+        >
+          {isSidebarOpen ? <X size={20} /> : <Menu size={20} />}
+        </button>
+        <div className="flex items-center gap-2">
+          <img src="/techflowLogo.png" alt="TechFlow Logo" className="w-8 h-8 object-contain" />
+          <span className="font-mono font-bold tracking-tighter text-lg text-orange-500">TECHFLOW</span>
+        </div>
+      </div>
 
       {/* Sidebar */}
       <Sidebar

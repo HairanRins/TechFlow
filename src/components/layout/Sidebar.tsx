@@ -1,6 +1,5 @@
 import { motion, AnimatePresence } from 'motion/react';
 import {
-  Terminal,
   Search,
   Wrench,
   BookOpen,
@@ -27,10 +26,10 @@ export default function Sidebar({ isOpen, activeSection, onSectionChange }: Side
           exit={{ x: -300, opacity: 0 }}
           className="fixed inset-y-0 left-0 z-40 w-64 bg-[#0a0a0a] border-r border-gray-800 flex flex-col md:relative"
         >
-          <div className="p-6 border-bottom border-gray-800">
-            <div className="flex items-center gap-3 text-orange-500 mb-2">
-              <Terminal size={24} />
-              <span className="font-mono font-bold tracking-tighter text-xl">TECHFLOW</span>
+          <div className="p-6 border-b border-gray-800">
+            <div className="flex items-center gap-2 mb-2">
+              <img src="/techflowLogo.png" alt="TechFlow Logo" className="w-12 h-12 object-contain" />
+              <span className="font-mono font-bold tracking-tighter text-2xl text-orange-500">TECHFLOW</span>
             </div>
             <p className="text-[10px] uppercase tracking-widest text-gray-500 font-mono">Support Playbook v1.0.4</p>
           </div>

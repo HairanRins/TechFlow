@@ -1,4 +1,4 @@
-import { Skill, Tool, TestCase, MaintenanceTip } from './types';
+import { Skill, Tool, TestCase, MaintenanceTip } from '../types';
 
 export const SKILLS: Skill[] = [
   {
