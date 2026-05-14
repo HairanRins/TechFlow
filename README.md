@@ -1,5 +1,4 @@
 # TechFlow - IT Support Playbook
-**Propriété de Rin's Andrianina**
 
 ## Run Locally
 
