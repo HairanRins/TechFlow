@@ -7,8 +7,13 @@ export interface Skill {
   id: string;
   title: string;
   description: string;
+  details?: string[];
+  flow?: {
+    title: string;
+    steps: string[];
+  };
   icon: string;
-  category: 'soft' | 'hard' | 'network' | 'security';
+  category: 'soft' | 'hard' | 'network' | 'security' | 'hardware' | 'os' | 'management';
 }
 
 export interface Tool {
@@ -17,6 +22,11 @@ export interface Tool {
   category: string;
   usage: string;
   description: string;
+  details?: string[];
+  schematic?: {
+    title: string;
+    steps: string[];
+  };
 }
 
 export interface TestCase {
@@ -32,6 +42,6 @@ export interface TestCase {
 export interface MaintenanceTip {
   id: string;
   title: string;
-  frequency: 'daily' | 'weekly' | 'monthly';
+  frequency: 'daily' | 'weekly' | 'monthly' | 'quarterly' | 'yearly';
   tasks: string[];
 }

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
@@ -21,7 +21,29 @@ type Section = 'overview' | 'skills' | 'tools' | 'playbook' | 'maintenance';
 
 export default function App() {
   const [activeSection, setActiveSection] = useState<Section>('overview');
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth >= 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        setIsSidebarOpen(true);
+      } else {
+        // Only auto-close if it was open from desktop mode
+        // This avoids closing it if the user explicitly opened it on mobile
+        // Actually, simple is better:
+        setIsSidebarOpen(false);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const handleSectionChange = (section: Section) => {
+    setActiveSection(section);
+    if (window.innerWidth < 768) {
+      setIsSidebarOpen(false);
+    }
+  };
 
   const renderContent = () => {
     switch (activeSection) {
@@ -50,11 +72,25 @@ export default function App() {
         </div>
       </div>
 
+      {/* Backdrop for mobile */}
+      <AnimatePresence>
+        {isSidebarOpen && window.innerWidth < 768 && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setIsSidebarOpen(false)}
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-30 md:hidden"
+          />
+        )}
+      </AnimatePresence>
+
       {/* Sidebar */}
       <Sidebar
         isOpen={isSidebarOpen}
         activeSection={activeSection}
-        onSectionChange={setActiveSection}
+        onSectionChange={handleSectionChange}
+        onClose={() => setIsSidebarOpen(false)}
       />
 
       {/* Main Content */}

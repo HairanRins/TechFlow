@@ -4,7 +4,8 @@ import {
   Wrench,
   BookOpen,
   AlertCircle,
-  ListRestart
+  ListRestart,
+  X
 } from 'lucide-react';
 import NavItem from './NavItem';
 
@@ -14,9 +15,10 @@ interface SidebarProps {
   isOpen: boolean;
   activeSection: Section;
   onSectionChange: (section: Section) => void;
+  onClose: () => void;
 }
 
-export default function Sidebar({ isOpen, activeSection, onSectionChange }: SidebarProps) {
+export default function Sidebar({ isOpen, activeSection, onSectionChange, onClose }: SidebarProps) {
   return (
     <AnimatePresence>
       {isOpen && (
@@ -24,9 +26,15 @@ export default function Sidebar({ isOpen, activeSection, onSectionChange }: Side
           initial={{ x: -300, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           exit={{ x: -300, opacity: 0 }}
-          className="fixed inset-y-0 left-0 z-40 w-64 bg-[#0a0a0a] border-r border-gray-800 flex flex-col md:relative"
+          className="fixed inset-y-0 left-0 z-50 w-72 bg-[#0a0a0a] border-r border-gray-800 flex flex-col md:relative md:w-64"
         >
-          <div className="p-6 border-b border-gray-800">
+          <div className="p-6 border-b border-gray-800 relative">
+            <button
+              onClick={onClose}
+              className="absolute top-6 right-4 p-2 text-gray-500 hover:text-white md:hidden"
+            >
+              <X size={20} />
+            </button>
             <div className="flex items-center gap-2 mb-2">
               <img src="/techflowLogo.png" alt="TechFlow Logo" className="w-12 h-12 object-contain" />
               <span className="font-mono font-bold tracking-tighter text-2xl text-orange-500">TECHFLOW</span>
